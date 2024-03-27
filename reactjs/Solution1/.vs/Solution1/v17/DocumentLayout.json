@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\HSE\\Second COurse HSe\\KP\\reactjs\\Solution1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DC2E6131-F81A-48B0-A04F-4E1988D3DB96}|reactapp\\reactapp.esproj|c:\\hse\\second course hse\\kp\\reactjs\\solution1\\reactapp\\src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{DC2E6131-F81A-48B0-A04F-4E1988D3DB96}|reactapp\\reactapp.esproj|solutionrelative:reactapp\\src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.js",
+              "DocumentMoniker": "C:\\HSE\\Second COurse HSe\\KP\\reactjs\\Solution1\\reactapp\\src\\App.js",
+              "RelativeDocumentMoniker": "reactapp\\src\\App.js",
+              "ToolTip": "C:\\HSE\\Second COurse HSe\\KP\\reactjs\\Solution1\\reactapp\\src\\App.js",
+              "RelativeToolTip": "reactapp\\src\\App.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-03-26T10:14:01.763Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
