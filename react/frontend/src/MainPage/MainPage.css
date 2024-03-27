@@ -1,0 +1,127 @@
+@font-face {
+    font-family: 'Minecraft Ten';
+    src: url('./ttf/minecraft-ten-font-cyrillic.ttf') format('truetype'); /* Путь к вашему файлу шрифта */
+    font-weight: normal;
+    font-style: normal;
+}
+
+DIV.containerPlayer {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 109%;
+    left: 20%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerForSPButton {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 80%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerForMPButton {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 68%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.container {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerForm {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 95%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.game-nickName {
+    color: black;
+    font-size: 60px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+.game-title {
+    color: black;
+    font-size: 150px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+.mpButton {
+    background-color: #FF8C00;
+    font-family: 'Minecraft Ten', sans-serif;
+    font-weight: bolder;
+    border: none;
+    display: inline-block;
+    box-shadow: 0 5px 15px 0 rgb(0, 0, 0);
+    transition: 0.5s;
+    font-size: 30px
+}
+
+.mpButton:hover {
+    transform: translate(0,-3px);
+    box-shadow: 0 20px 40px 0 rgb(0, 0, 0);
+}
+.formButton {
+    background-color: #FF8C00;
+    font-family: 'Minecraft Ten', sans-serif;
+    font-weight: bolder;
+    border: none;
+    display: inline-block;
+    box-shadow: 0 5px 15px 0 rgb(0, 0, 0);
+    transition: 0.5s;
+    font-size: 12px
+}
+
+.formButton:hover {
+    transform: translate(0,-3px);
+    box-shadow: 0 20px 10px 0 rgb(0, 0, 0);
+}
+
+.form {
+    width: 300px;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ccc;
+    font-family: 'Minecraft Ten'
+}
+
+
+.form_input {
+    font-family: 'Minecraft Ten' ;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+

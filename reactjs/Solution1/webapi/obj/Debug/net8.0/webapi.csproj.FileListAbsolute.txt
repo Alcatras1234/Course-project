@@ -224,3 +224,4 @@ C:\HSE\Second COurse HSe\KP\reactjs\Solution1\webapi\bin\Debug\net8.0\runtimes\w
 C:\HSE\Second COurse HSe\KP\reactjs\Solution1\webapi\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\HSE\Second COurse HSe\KP\reactjs\Solution1\webapi\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\HSE\Second COurse HSe\KP\reactjs\Solution1\webapi\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\HSE\Second COurse HSe\KP\reactjs\Solution1\webapi\obj\Debug\net8.0\webapi.sourcelink.json
