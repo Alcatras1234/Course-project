@@ -1,6 +1,8 @@
 import React, {Component, useState, useCallback, useEffect} from 'react'
 import './MainPage.css';
 import './index.css'
+//import 'bootstrap/dist/css/bootstrap.min.css'
+import uuid from 'react-uuid'
 
 
 function MultiPlayer(){
@@ -10,51 +12,86 @@ function SinglePlayer() {}
 
 function MainPage() {
     const [username, setUsername] = useState('');
-    const [data, setData] = useState();
+    const [userId, setUserId] = useState('');
+    const [data, setData] = useState([]);
 
-    const handleNickNameChange = useCallback((event) => { //сохраняет состояние того, что пользователь написал внурь приложения(у меня это поле ввода формы).
-        setUsername(event.target.value); // хранится то, что пользователь вписал в форму
-    }, []);
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
+    const generateUserId = () => {
+        if (!userId) { // Проверяем, был ли userId уже сгенерирован
+            const generatedUserId = uuid();
+            console.log(generatedUserId);
+            setUserId(generatedUserId); // Устанавливаем сгенерированный userId в состояние
+            return generatedUserId;
+        }
+        return userId; // Если userId уже сгенерирован, возвращаем его из состояния
+    };
    
-
-    const fetchData = async() => {
-        try {
-            const response = await fetch('http://localhost:3001/api/data')
-            const jsonData = await response.json()
-            setData(jsonData)
-            console.log(jsonData)
-        } catch(error) {
-            console.log('Error', error)
-        }
-    }
-
-    const fetchPOST = (e) => {
+    const handleSubmit = async (event) => { 
+        event.preventDefault();//чтобы не обновлялось
         
-        try {
-            e.preventDefault();
-            fetch('http://localhost:3001/api/post_username', {
-                method: 'POST',
-                body: JSON.stringify({
-                    name: username
-                })
-            }).then(res => {return res.json()}).then(res => console.log(res));
-        } catch (error) {
-            console.log('Error', error)
-        }
-    }
+     
+        const generatedUserId = generateUserId();   // Генерация UUID для пользователя
+        console.log(userId);
+        
+        
+        
+      
+        
+         
+            try {
+                const response = await fetch(`http://localhost:3001/api/checkId/${generatedUserId}`); // Запрос на то, есть ли пользователь в базе
+                if (response.ok) { // Если да, то меняем старый ник на новый
+                    console.log('id exist');
+                    fetch(`http://localhost:3001/api/update/${generatedUserId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({name: username})
+                    });
+                } else { //Если нету, то добавляем пользователя в БД 
+                    console.log('no');
+                    fetch(`http://localhost:3001/api/add/${generatedUserId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ user_id: generatedUserId, name: username })
+                    });
+                
+
+                }
+            } catch (error) { // Ошибки ловим
+                console.log('error');
+            }
+        
+       
+
+        const formData = new FormData(event.target);
+        const enteredUsername = formData.get('name');
+        
+        setUsername(enteredUsername);
+
+     
+
+        console.log(username);
+    
+        // Дополнительные действия после отправки формы, например, отправка данных на сервер
+    };
+
 
 
    
     return (
        <>
            <div className='containerPlayer'>
-                <div className="game-nickName">{data.name}</div>
-           </div>
+                {data?.map(d => {
+                    return(
+                        <div key={d.id}>
+                            <p className='game-nickName'>{d.name}</p>
+                        </div>
+                    )
+                })}
+            </div>
             <div className="container">
                 <h1 className="game-title">PENTAGO</h1>
             </div>
@@ -68,11 +105,11 @@ function MainPage() {
            </div>
            
            <div className="containerForm">
-               <form onSubmit={fetchPOST} className="form" id="mars-once" action="/apply/">
+               <form onSubmit={handleSubmit} className="form" id="mars-once" action="/apply/">
                    <div>
                        <label>
                            <h3>Введите свой ник:</h3>
-                           <input onChange={handleNickNameChange} className="form_input" type="text" name="name" id="name" placeholder="AMOGUS" required autofocus/>
+                           <input className="form_input" type="text" name="name" id="name" placeholder="AMOGUS" required autofocus/>
                        </label>
                    </div>
                    <div>
