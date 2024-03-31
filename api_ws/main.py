@@ -1,5 +1,5 @@
 import json
-
+import pdb
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
@@ -8,7 +8,7 @@ app = FastAPI()
 
 
 def init_board():
-    return {
+    return [
         None, None, None,  # 0 1 2
         None, None, None,  # 3 4 5
         None, None, None,  # 6 7 8
@@ -24,7 +24,7 @@ def init_board():
         None, None, None,  # 27 28 29
         None, None, None,  # 30 31 32
         None, None, None  # 33 34 35
-    }
+    ]
 
 
 board = init_board()
@@ -33,21 +33,31 @@ board = init_board()
 async def update_board(manager, data):
     print(data)
     index = int(data['cell']) - 1
+    print(index)
     data['init'] = False
-    if not board[index]:
+    print(data)
+
+    if board[index] is None:
         # cell is empty
         board[index] = data['player']
+
         if if_won():
             data['message'] = "won"
+            print('if_won()', data)
         elif is_draw():
             data['message'] = "draw"
+            print('is_draw',data)
         else:
             data['message'] = "move"
+            print('move',data)
     else:
         data['message'] = "choose another one"
+        print('else', data)
+
     await manager.broadcast(data)
     if data['message'] in ['draw', 'won']:
         manager.connections = []
+
 
 
 def is_draw():

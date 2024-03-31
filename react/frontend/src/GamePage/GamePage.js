@@ -18,10 +18,10 @@ function Game() {
     }
     const updateCell = (id, color) => {
         let cell = document.getElementById(id);
-        if (color == "#000000") {
-            cell.classList.add('black-button');
+        if (color == "Black") {
+            cell.style.backgroundColor = 'black';
         } else {
-            cell.classList.add(color + 'orange-button');
+            cell.style.backgroundColor = '#FF8C00';
         }
         
     }
@@ -73,9 +73,12 @@ function Game() {
     const changePlayer = () => {
         
         console.log(player, currentPlayer);
+        const color = swaper[currentPlayer];
+        console.log(color);
         if (player == currentPlayer) {
             setInfo("Ваш ход");
             setCurPlayer(swaper[currentPlayer]);
+            console.log(currentPlayer);
         } else {
             setInfo("Сейчас ход вашего соперника");
             setCurPlayer(swaper[currentPlayer]);
@@ -113,6 +116,7 @@ function Game() {
    
     ws.onmessage = function (event) {
         var response = JSON.parse(event.data);
+        console.log(response);
         if (response.init) {
             setInfo(response.message); // сообщение которое есть в JSON и там написано 'Ждите второго игрока' или ''
             setPlayer(response.player); // для первого игрока говорится, каким цветом он будет играть 
@@ -123,7 +127,7 @@ function Game() {
         } else {
             // Если был ход
             if (response.message == 'move') {
-                updateCell(response.cell, response.color);
+                updateCell(response.cell, response.player); // обновление цвета кружка
                 changePlayer();
             // Ничья
             } else if (response.message == 'draw') {
@@ -155,14 +159,20 @@ function Game() {
 
    
     const handleGame = (id) => {
+        console.log(id)
         if (gameOver) {
             return;
         }
         var cell = document.getElementById(id);
         console.log(cell.style.backgroundColor);
         if (cell.style.backgroundColor === 'white' && player == currentPlayer) {
+            console.log('if')
             ws.send(JSON.stringify({ player: player, cell: id }));
+            
         } else {
+            console.log(
+                'else'
+            )
             setInfo("Выберете свободную ячейку");
         }
         
@@ -179,19 +189,19 @@ function Game() {
                 <table>
                     <tbody>
                         <tr>
-                            <td><button onClick={() => handleGame('1')} className='idetify_button3' id='1' style={{ backgroundColor: buttonColor }}></button></td>
-                            <td><button onClick={() => handleGame('2')} className='idetify_button3' id='2'></button></td>
-                            <td><button onClick={() => handleGame('3')} className='idetify_button3' id='3'></button></td>
+                            <td><button onClick={() => handleGame('1')} className='idetify_button3' id='1' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('2')} className='idetify_button3' id='2' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('3')} className='idetify_button3' id='3' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('4')} className='idetify_button3'  id='4'></button></td>
-                            <td><button onClick={() => handleGame('5')} className='idetify_button3'  id='5'></button></td>
-                            <td><button onClick={() => handleGame('6')} className='idetify_button3'  id='6'></button></td>
+                            <td><button onClick={() => handleGame('4')} className='idetify_button3'  id='4' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('5')} className='idetify_button3'  id='5' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('6')} className='idetify_button3'  id='6' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('7')} className='idetify_button3'  id='7'></button></td>
-                            <td><button onClick={() => handleGame('8')} className='idetify_button3'  id='8'></button></td>
-                            <td><button onClick={() => handleGame('9')} className='idetify_button3'  id='9'></button></td>
+                            <td><button onClick={() => handleGame('7')} className='idetify_button3'  id='7' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('8')} className='idetify_button3'  id='8' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('9')} className='idetify_button3'  id='9' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -200,19 +210,19 @@ function Game() {
                 <table>
                     <tbody>
                         <tr>
-                            <td><button onClick={() => handleGame('10')} className='idetify_button3' id='10'></button></td>
-                            <td><button onClick={() => handleGame('11')} className='idetify_button3' id='11'></button></td>
-                            <td><button onClick={() => handleGame('12')} className='idetify_button3' id='12'></button></td>
+                            <td><button onClick={() => handleGame('10')} className='idetify_button3' id='10' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('11')} className='idetify_button3' id='11' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('12')} className='idetify_button3' id='12' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('13')} className='idetify_button3'  id='13'></button></td>
-                            <td><button onClick={() => handleGame('14')} className='idetify_button3'  id='14'></button></td>
-                            <td><button onClick={() => handleGame('15')} className='idetify_button3'  id='15'></button></td>
+                            <td><button onClick={() => handleGame('13')} className='idetify_button3'  id='13' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('14')} className='idetify_button3'  id='14' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('15')} className='idetify_button3'  id='15' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('16')} className='idetify_button3'  id='16'></button></td>
-                            <td><button onClick={() => handleGame('17')} className='idetify_button3'  id='17'></button></td>
-                            <td><button onClick={() => handleGame('18')} className='idetify_button3'  id='18'></button></td>
+                            <td><button onClick={() => handleGame('16')} className='idetify_button3'  id='16' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('17')} className='idetify_button3'  id='17' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('18')} className='idetify_button3'  id='18' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -221,19 +231,19 @@ function Game() {
                 <table>
                     <tbody>
                         <tr>
-                            <td><button onClick={() => handleGame('19')} className='idetify_button3' id='19'></button></td>
-                            <td><button onClick={() => handleGame('20')} className='idetify_button3' id='20'></button></td>
-                            <td><button onClick={() => handleGame('21')} className='idetify_button3' id='21'></button></td>
+                            <td><button onClick={() => handleGame('19')} className='idetify_button3' id='19' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('20')} className='idetify_button3' id='20' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('21')} className='idetify_button3' id='21' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('22')} className='idetify_button3'  id='22'></button></td>
-                            <td><button onClick={() => handleGame('23')} className='idetify_button3'  id='23'></button></td>
-                            <td><button onClick={() => handleGame('24')} className='idetify_button3'  id='24'></button></td>
+                            <td><button onClick={() => handleGame('22')} className='idetify_button3'  id='22' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('23')} className='idetify_button3'  id='23' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('24')} className='idetify_button3'  id='24' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('25')} className='idetify_button3'  id='25'></button></td>
-                            <td><button onClick={() => handleGame('26')} className='idetify_button3'  id='26'></button></td>
-                            <td><button onClick={() => handleGame('27')} className='idetify_button3'  id='27'></button></td>
+                            <td><button onClick={() => handleGame('25')} className='idetify_button3'  id='25' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('26')} className='idetify_button3'  id='26' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('27')} className='idetify_button3'  id='27' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -242,19 +252,19 @@ function Game() {
                 <table>
                     <tbody>
                         <tr>
-                            <td><button onClick={() => handleGame('28')} className='idetify_button3' id='28'></button></td>
-                            <td><button onClick={() => handleGame('29')} className='idetify_button3' id='29'></button></td>
-                            <td><button onClick={() => handleGame('30')} className='idetify_button3' id='30'></button></td>
+                            <td><button onClick={() => handleGame('28')} className='idetify_button3' id='28' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('29')} className='idetify_button3' id='29' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('30')} className='idetify_button3' id='30' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('31')} className='idetify_button3'  id='31'></button></td>
-                            <td><button onClick={() => handleGame('32')} className='idetify_button3'  id='32'></button></td>
-                            <td><button onClick={() => handleGame('33')} className='idetify_button3'  id='33'></button></td>
+                            <td><button onClick={() => handleGame('31')} className='idetify_button3'  id='31' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('32')} className='idetify_button3'  id='32' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('33')} className='idetify_button3'  id='33' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                         <tr>
-                            <td><button onClick={() => handleGame('34')} className='idetify_button3'  id='34'></button></td>
-                            <td><button onClick={() => handleGame('35')} className='idetify_button3'  id='35'></button></td>
-                            <td><button onClick={() => handleGame('36')} className='idetify_button3'  id='36'></button></td>
+                            <td><button onClick={() => handleGame('34')} className='idetify_button3'  id='34' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('35')} className='idetify_button3'  id='35' style={{backgroundColor: buttonColor}}></button></td>
+                            <td><button onClick={() => handleGame('36')} className='idetify_button3'  id='36' style={{backgroundColor: buttonColor}}></button></td>
                         </tr>
                     </tbody>
                 </table>
