@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'Minecraft Ten';
+    src: url('./ttf/minecraft-ten-font-cyrillic.ttf') format('truetype'); /* Путь к вашему файлу шрифта */
+    font-weight: normal;
+    font-style: normal;
+}
+
+DIV.containerFor1PButton {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 80%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerFor2PButton {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 68%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerPlayer {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 55%;
+    left: 15%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.container {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.game-title {
+    color: black;
+    font-size: 150px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+.game-nickName {
+    color: black;
+    font-size: 40px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}

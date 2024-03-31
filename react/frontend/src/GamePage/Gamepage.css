@@ -1,0 +1,213 @@
+@font-face {
+    font-family: 'Minecraft Ten';
+    src: url('./ttf/minecraft-ten-font-cyrillic.ttf') format('truetype'); /* Путь к вашему файлу шрифта */
+    font-weight: normal;
+    font-style: normal;
+}
+
+DIV.containerPlayer {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 109%;
+    left: 20%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.container0 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 35%;
+    left: 41%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid black
+}
+
+DIV.container1 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 35%;
+    left: 58%;
+    margin-right: -50%;
+    border: 4px solid black;
+    transform: translate(-50%, -50%)
+}
+DIV.container2 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 76%;
+    left: 41%;
+    margin-right: -50%;
+    border: 4px solid black;
+    transform: translate(-50%, -50%)
+}
+DIV.container3 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 76%;
+    left: 58%;
+    margin-right: -50%;
+    border: 4px solid black;
+    transform: translate(-50%, -50%)
+}
+
+.idetify_button1 {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 60px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 50%;
+}
+
+.idetify_button3 {
+    border: none;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    border:1px solid black;
+    border-radius: 50%;
+}
+
+
+
+
+DIV.containerIdButton1 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background-color: #F5F5F5;
+    top: 17%;
+    left: 4%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.idetify_button2 {
+    background-color: #FF8C00;
+    border: none;
+    color: white;
+    padding: 60px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    border-radius: 50%;
+}
+
+DIV.containerInfo {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 80%;
+    left: 13%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerIdButton2 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 17%;
+    left: 96%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.game-nickName {
+    color: black;
+    font-size: 14px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+.game-title {
+    color: black;
+    font-size: 150px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+.mpButton {
+    background-color: #FF8C00;
+    font-family: 'Minecraft Ten', sans-serif;
+    font-weight: bolder;
+    border: none;
+    display: inline-block;
+    box-shadow: 0 5px 15px 0 rgb(0, 0, 0);
+    transition: 0.5s;
+    font-size: 30px
+}
+
+.mpButton:hover {
+    transform: translate(0,-3px);
+    box-shadow: 0 20px 40px 0 rgb(0, 0, 0);
+}
+.formButton {
+    background-color: #FF8C00;
+    font-family: 'Minecraft Ten', sans-serif;
+    font-weight: bolder;
+    border: none;
+    display: inline-block;
+    box-shadow: 0 5px 15px 0 rgb(0, 0, 0);
+    transition: 0.5s;
+    font-size: 12px
+}
+
+.formButton:hover {
+    transform: translate(0,-3px);
+    box-shadow: 0 20px 10px 0 rgb(0, 0, 0);
+}
+
+.form {
+    width: 300px;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ccc;
+    font-family: 'Minecraft Ten'
+}
+
+
+.form_input {
+    font-family: 'Minecraft Ten' ;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+
+.black-buttom{
+    background-color: black;
+}
+
+.orange-buttom{
+    background-color: #FF8C00;
+}
