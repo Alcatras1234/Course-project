@@ -20,8 +20,10 @@ function Game() {
         let cell = document.getElementById(id);
         if (color == "Black") {
             cell.style.backgroundColor = 'black';
+            cell.classList.add('black-button');
         } else {
             cell.style.backgroundColor = '#FF8C00';
+            cell.classList.add('orange-button');
         }
         
     }
@@ -68,11 +70,62 @@ function Game() {
         //по диагонали со второго элемента правого края
         [13, 15, 20, 22, 24]
     ]
+    
+    const rotateHalf = (id) => {
+        if (id == "R1") { // Удаляй у старого элемента класс цвета кнопки, а у нового добавь класс старой кнопки
+            let colorTemp3 = document.getElementById(3).style.backgroundColor;
+            let classList3 = document.getElementById(3).classList;
+            console.log(document.getElementById(3).classList);
+
+            document.getElementById(3).style.backgroundColor = document.getElementById(1).style.backgroundColor;
+            document.getElementById(3).classList = document.getElementById(1).classList;
+
+            console.log(document.getElementById(3).classList, document.getElementById(3).style.backgroundColor);
+            
+
+            let colorTemp9 = document.getElementById(9).style.backgroundColor;
+            let classList9 = document.getElementById(9).classList;
+
+            document.getElementById(9).style.backgroundColor = colorTemp3; //colorTemp3
+            document.getElementById(9).classList = classList3;
+
+            let colorTemp7 = document.getElementById(7).style.backgroundColor;
+            let classList7 = document.getElementById(7).classList;
+
+            document.getElementById(7).style.backgroundColor = colorTemp9;
+            document.getElementById(7).classList = classList9;
+
+            document.getElementById(1).style.backgroundColor = colorTemp7;
+            document.getElementById(1).classList = classList7;
+            console.log(document.getElementById(1).classList, document.getElementById(1).style.backgroundColor);
+
+            let colorTemp6 = document.getElementById(6).style.backgroundColor;
+            let classList6 = document.getElementById(6).classList;
+
+            document.getElementById(6).style.backgroundColor = document.getElementById(2).style.backgroundColor;
+            document.getElementById(6).classList = document.getElementById(2).classList;
+
+            let classList8 = document.getElementById(8).classList;
+            let colorTemp8 = document.getElementById(8).style.backgroundColor;
+
+            document.getElementById(8).style.backgroundColor = colorTemp6;
+            document.getElementById(8).classList = classList6;
+
+            let classList4 = document.getElementById(4).classList;
+            let colorTemp4 = document.getElementById(4).style.backgroundColor;
+
+            document.getElementById(4).style.backgroundColor = colorTemp8;
+            document.getElementById(4).classList = classList8;
+
+            document.getElementById(2).style.backgroundColor = colorTemp4;
+            document.getElementById(2).classList = classList4;
+        }
+    }
 
     
     const changePlayer = () => {
         
-        console.log(player, currentPlayer);
+        
         const color = swaper[currentPlayer];
         console.log(color);
         if (player == currentPlayer) {
@@ -97,18 +150,20 @@ function Game() {
         for (let i = 1; i <= 36; i++) {
             cell.push(document.getElementById(i));
         }
+     
         winCombination.forEach((row) => {
-            if (cell[row[0]].style.backgroundColor == cell[row[1]].style.backgroundColor
-                && cell[row[0]].style.backgroundColor == cell[row[2]].style.backgroundColor 
-                && cell[row[0]].style.backgroundColor == cell[row[3]].style.backgroundColor
-                && cell[row[0]].style.backgroundColor == cell[row[4]].style.backgroundColor
-                && cell[row[0]].style.backgroundColor == cell[row[5]].style.backgroundColor
-                && cell[row[0]].style.backgroundColor != 'white') {
-                    cell[row[0]].style.backgroundColor = "red";
-                    cell[row[1]].style.backgroundColor = "red";
-                    cell[row[2]].style.backgroundColor = "red";
-                    cell[row[3]].style.backgroundColor = "red";
-                    cell[row[4]].style.backgroundColor = "red";
+            let firstColor = cell[row[0]].classList[1]; 
+            if (cell[row[1]].classList.contains(firstColor) 
+                && cell[row[2]].classList.contains(firstColor)
+                && cell[row[3]].classList.contains(firstColor)
+                && cell[row[4]].classList.contains(firstColor)
+               ) {
+                    
+                    cell[row[0]].style.backgroundColor = 'red';
+                    cell[row[1]].style.backgroundColor = 'red';
+                    cell[row[2]].style.backgroundColor = 'red';
+                    cell[row[3]].style.backgroundColor = 'red';
+                    cell[row[4]].style.backgroundColor = 'red';
                     return;
                 }
         });
@@ -144,6 +199,8 @@ function Game() {
                 ws.close(1000); // Закрываем соединение
             } else if (response.player == player && response.message == "Entered") {
                 setInfo("Выберите другую ячейку");
+            } else if (response.message == "R1") {
+                rotateHalf("R1");
             }
         }
     };
@@ -157,6 +214,13 @@ function Game() {
         setGameOver(true);
     };
 
+    const handleRotate = (id1) => {
+        console.log('1')
+        // if (gameOver) {
+        //     return;
+        // }
+        ws.send(JSON.stringify({rotate: id1}))
+    }
    
     const handleGame = (id) => {
         console.log(id)
@@ -167,7 +231,7 @@ function Game() {
         console.log(cell.style.backgroundColor);
         if (cell.style.backgroundColor === 'white' && player == currentPlayer) {
             console.log('if')
-            ws.send(JSON.stringify({ player: player, cell: id }));
+            ws.send(JSON.stringify({ player: player, cell: id, rotate:""}));
             
         } else {
             console.log(
@@ -180,11 +244,20 @@ function Game() {
     return (
        <>
            <div className='containerIdButton1'>
-                <button class='idetify_button1'></button>
+                <button className='idetify_button1'></button>
            </div>
            <div className='containerIdButton2'>
-                <button class='idetify_button2'></button>
+                <button className='idetify_button2'></button>
            </div>
+
+            <div className='containerRoutateButton1Right'>
+                <button onClick={() => handleRotate('R1')} className='mpButton4'> ➦ </button>
+            </div>
+
+
+
+
+
            <div className='container0'>
                 <table>
                     <tbody>

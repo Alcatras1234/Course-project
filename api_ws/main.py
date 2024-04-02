@@ -1,5 +1,4 @@
 import json
-import pdb
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
@@ -32,31 +31,75 @@ board = init_board()
 
 async def update_board(manager, data):
     print(data)
-    index = int(data['cell']) - 1
-    print(index)
-    data['init'] = False
-    print(data)
 
-    if board[index] is None:
-        # cell is empty
-        board[index] = data['player']
 
+    if data['rotate'] != '':
+        if (data['rotate'] == 'R1'):
+            # Поворачиваем по часовой стрелке угловые элементы
+            temp2 = board[2]
+            board[2] = board[0]
+            temp8 = board[8]
+            board[8] = temp2
+            temp6 = board[6]
+            board[6] = temp8
+            board[0] = temp6
+            # Поворачиваем по часовой стрелке внутренние элементы
+            temp5 = board[5]
+            board[5] = board[1]
+            temp7 = board[7]
+            board[7] = temp5
+            temp3 = board[3]
+            board[3] = temp7
+            board[1] = temp3
+            data['message'] = 'R1'
+            data['init'] = False
+        elif (data['rotate'] == 'L1'):
+            # Поворачиваем против часовой стрелки угловые элементы
+            temp0 = board[0]
+            board[0] = board[2]
+            temp6 = board[6]
+            board[6] = temp0
+            temp8 = board[8]
+            board[8] = temp6
+            board[2] = temp8
+            # Поворачиваем против часовой стрелки внутренние элементы
+            temp1 = board[1]
+            board[1] = board[5]
+            temp3 = board[3]
+            board[3] = temp1
+            temp7 = board[7]
+            board[7] = temp3
+            board[5] = temp7
+            data['message'] = 'L1'
         if if_won():
             data['message'] = "won"
-            print('if_won()', data)
-        elif is_draw():
-            data['message'] = "draw"
-            print('is_draw',data)
-        else:
-            data['message'] = "move"
-            print('move',data)
+        await manager.broadcast(data)
     else:
-        data['message'] = "choose another one"
-        print('else', data)
+        index = int(data['cell']) - 1
+        print(index)
+        data['init'] = False
+        print(data)
 
-    await manager.broadcast(data)
-    if data['message'] in ['draw', 'won']:
-        manager.connections = []
+        if board[index] is None:
+            # cell is empty
+            board[index] = data['player']
+
+            if if_won():
+                data['message'] = "won"
+                print('if_won()', data)
+            elif is_draw():
+                data['message'] = "draw"
+                print('is_draw',data)
+            else:
+                data['message'] = "move"
+                print('move',data)
+        else:
+            data['message'] = "choose another one"
+            print('else', data)
+
+        await manager.broadcast(data)
+        if data['message'] in ['draw', 'won']:
+            manager.connections = []
 
 
 
@@ -131,21 +174,18 @@ class ConnectionManager:
                     # Первый игрок присоеденился, задаем ему значение шариков "Black" и говорим чтобы он подождал второго игрока
                     'init': True,
                     'player': 'Black',  # для индентификации в игре
-                    'color': '#000000',  # для закраски поля
                     'message': 'Ждите второго игрока'
                 })
             else:
                 await websocket.send_json({  # Второй игрок присоеденился, задаем ему значение шариков "Orange"
                     'init': True,
                     'player': 'Orange',
-                    'color': '#FF8C00',
                     'message': ''
                 })
                 await self.active_connections[0].send_json({
                     # Говорим первому игроку, что второй игрок присоеденился и говорим что сейчас его ход(первого игрока)
                     'init': True,
                     'player': 'Black',
-                    'color': '#000000',
                     'message': 'Ваш ход'
                 })
 

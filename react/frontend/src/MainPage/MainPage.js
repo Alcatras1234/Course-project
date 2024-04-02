@@ -40,48 +40,13 @@ function MainPage() {
         
         
         alert("Вы успешно задали свой ник!!!")
-      
-        
-         
-           /* try {
-                const response = await fetch(`http://localhost:3001/api/checkId/${generatedUserId}`); // Запрос на то, есть ли пользователь в базе
-                if (response.ok) { // Если да, то меняем старый ник на новый
-                    console.log('id exist');
-                    fetch(`http://localhost:3001/api/update/${generatedUserId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({name: enteredUsername})
-                    });
-                 
-                } else { //Если нету, то добавляем пользователя в БД 
-
-                    
-                    fetch(`http://localhost:3001/api/add/${generatedUserId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                       
-                        body: JSON.stringify({ user_id: generatedUserId, name: enteredUsername})
-                    });
-                    alert("Вы успешно задали свой ник!!!")
-                    console.log('no');
-                
-
-                }
-            } catch (error) { // Ошибки ловим
-                console.log('error');
-            }
-        */
         setUserId(generatedUserId);
 
        
         
 
         console.log(username);
-        // Дополнительные действия после отправки формы, например, отправка данных на сервер
+        
     };
 
 
@@ -105,10 +70,6 @@ function MainPage() {
             <div className="containerForMPButton">
                 <button onClick={handleNavigateMP} className="mpButton">Играть с другом</button> 
             </div>
-           
-           <div className="containerForSPButton">
-               <button onClick={handleNavigateMP} className="mpButton">Играть с ботом</button>
-           </div>
            
            <div className="containerForm">
                <form onSubmit={handleSubmit} className="form" id="mars-once" action="/apply/">
