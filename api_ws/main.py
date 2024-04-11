@@ -1,10 +1,21 @@
 import json
+import uuid
+
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
+connections = {}
+
+class GameRoom:
+    def __init__(self):
+        self.board = init_board()
+        self.connections = [] # список игроков в комнате
+
+    def reset_board(self):
+        self.board = init_board()
 
 def init_board():
     return [
@@ -26,150 +37,160 @@ def init_board():
     ]
 
 
-board = init_board()
 
 
-async def update_board(manager, data):
-    print(data)
 
+async def update_board(manager, data, uuid):
 
-    if data['rotate'] != '':
-        if (data['rotate'] == 'R1'):
-            # Поворачиваем по часовой стрелке угловые элементы
-            temp2 = board[2]
-            board[2] = board[0]
-            temp8 = board[8]
-            board[8] = temp2
-            temp6 = board[6]
-            board[6] = temp8
-            board[0] = temp6
-            # Поворачиваем по часовой стрелке внутренние элементы
-            temp5 = board[5]
-            board[5] = board[1]
-            temp7 = board[7]
-            board[7] = temp5
-            temp3 = board[3]
-            board[3] = temp7
-            board[1] = temp3
-            data['message'] = 'R1'
-            data['init'] = False
-        elif (data['rotate'] == 'L1'):
-            # Поворачиваем против часовой стрелки угловые элементы
-            temp0 = board[0]
-            board[0] = board[2]
-            temp6 = board[6]
-            board[6] = temp0
-            temp8 = board[8]
-            board[8] = temp6
-            board[2] = temp8
-            # Поворачиваем против часовой стрелки внутренние элементы
-            temp1 = board[1]
-            board[1] = board[5]
-            temp3 = board[3]
-            board[3] = temp1
-            temp7 = board[7]
-            board[7] = temp3
-            board[5] = temp7
-            data['message'] = 'L1'
-        if if_won():
-            data['message'] = "won"
-        await manager.broadcast(data)
-    else:
-        index = int(data['cell']) - 1
-        print(index)
+    if (uuid in manager.active_connections):
+        board = manager.active_connections[uuid].board
+        q = data['player']
         data['init'] = False
-        print(data)
+        if data['rotate'] != '':
+            if (data['rotate'] == 'R1'):
+                board[0], board[2], board[8], board[6] = board[6], board[0], board[2], board[8]
+                board[1], board[5], board[7], board[3] = board[3], board[1], board[5], board[7]
+                #data['message'] = 'R1'
 
-        if board[index] is None:
-            # cell is empty
-            board[index] = data['player']
+            elif (data['rotate'] == 'L1'):
+                board[0], board[2], board[8], board[6] = board[2], board[8], board[6], board[0]
+                board[1], board[5], board[7], board[3] = board[5], board[7], board[3], board[1]
+                #data['message'] = 'L1'
+            elif (data['rotate'] == 'R2'):
+                board[9], board[11], board[17], board[15] = board[15], board[9], board[11], board[17]
+                board[10], board[14], board[16], board[12] = board[12], board[10], board[14], board[16]
 
-            if if_won():
-                data['message'] = "won"
-                print('if_won()', data)
-            elif is_draw():
-                data['message'] = "draw"
-                print('is_draw',data)
-            else:
-                data['message'] = "move"
-                print('move',data)
+            elif (data['rotate'] == 'L2'):
+                board[9], board[11], board[17], board[15] = board[11], board[17], board[15], board[9]
+                board[10], board[14], board[16], board[12] = board[14], board[16], board[12], board[10]
+
+            elif (data['rotate'] == 'R3'):
+                board[18], board[20], board[26], board[24] = board[24], board[18], board[20], board[26]
+                board[19], board[23], board[25], board[21] = board[21], board[19], board[23], board[25]
+
+            elif (data['rotate'] == 'L3'):
+                board[18], board[20], board[26], board[24] = board[20], board[26], board[24], board[18]
+                board[19], board[23], board[25], board[21] = board[23], board[25], board[21], board[19]
+
+            elif (data['rotate'] == 'R4'):
+                board[27], board[29], board[35], board[33] = board[33], board[27], board[29], board[35]
+                board[28], board[32], board[34], board[30] = board[30], board[28], board[32], board[34]
+
+            elif (data['rotate'] == 'L4'):
+                board[27], board[29], board[35], board[33] = board[29], board[35], board[33], board[27]
+                board[28], board[32], board[34], board[30] = board[32], board[34], board[30], board[28]
+
+            if if_won(board, data):
+                data['win'] = "won_rotate"
+                #data['rotate_win'] = "R1"
+                manager.active_connections[uuid].reset_board()
+
         else:
-            data['message'] = "choose another one"
-            print('else', data)
-
-        await manager.broadcast(data)
-        if data['message'] in ['draw', 'won']:
-            manager.connections = []
+            index = int(data['cell']) - 1
 
 
 
-def is_draw():
-    global board
+            if board[index] is None:
+                # cell is empty
+                board[index] = data['player']
+
+                if if_won(board, data):
+                    data['message'] = "won"
+                    print('if_won()', data)
+                elif is_draw(board):
+                    data['message'] = "draw"
+                    print('is_draw',data)
+                else:
+                    data['message'] = "move"
+                    print('move',data)
+            else:
+                data['message'] = "choose another one"
+                print('else', data)
+
+
+            if data['message'] in ['draw', 'won']:
+                manager.active_connections[uuid].reset_board()
+    await manager.broadcast(data, uuid)
+
+
+def is_draw(board):
+
     for i in board:
         if not i:
             return False
-    board = init_board()
+
     return True
 
 
-def if_won():
-    global board
-    if (board[0] == board[1] == board[2] == board[9] == board[10] != None or
-            board[3] == board[4] == board[5] == board[12] == board[13] != None or
-            board[6] == board[7] == board[8] == board[15] == board[16] != None or
-            board[18] == board[19] == board[20] == board[27] == board[28] != None or
-            board[21] == board[22] == board[23] == board[30] == board[31] != None or
-            board[24] == board[25] == board[26] == board[33] == board[34] != None or
+def if_won(board, data):
 
-            board[1] == board[2] == board[9] == board[10] == board[11] != None or
-            board[4] == board[5] == board[12] == board[13] == board[14] != None or
-            board[7] == board[8] == board[15] == board[16] == board[17] != None or
-            board[19] == board[20] == board[27] == board[28] == board[29] != None or
-            board[22] == board[23] == board[30] == board[31] == board[32] != None or
-            board[25] == board[26] == board[33] == board[34] == board[35] != None or
+    winning_combinations = [
 
-            board[0] == board[3] == board[6] == board[18] == board[21] != None or
-            board[1] == board[4] == board[7] == board[19] == board[22] != None or
-            board[2] == board[5] == board[8] == board[20] == board[23] != None or
-            board[9] == board[12] == board[15] == board[27] == board[30] != None or
-            board[10] == board[13] == board[16] == board[28] == board[31] != None or
-            board[11] == board[14] == board[17] == board[29] == board[32] != None or
+        [0, 1, 2, 9, 10],
+        [3, 4, 5, 12, 13],
+        [6, 7, 8, 15, 16],
+        [18, 19, 20, 27, 28],
+        [21, 22, 23, 30, 31],
+        [24, 25, 26, 33, 34],
 
-            board[3] == board[6] == board[18] == board[21] == board[24] != None or
-            board[4] == board[7] == board[19] == board[22] == board[25] != None or
-            board[5] == board[8] == board[20] == board[23] == board[26] != None or
-            board[12] == board[15] == board[27] == board[30] == board[33] != None or
-            board[13] == board[16] == board[28] == board[31] == board[34] != None or
-            board[14] == board[17] == board[29] == board[32] == board[35] != None or
+        [1, 2, 9, 10, 11],
+        [4, 5, 12, 13, 14],
+        [7, 8, 15, 16, 17],
+        [19, 20, 27, 28, 29],
+        [22, 23, 30, 31, 32],
+        [25, 26, 33, 34, 35],
 
-            board[0] == board[4] == board[8] == board[27] == board[31] != None or
-            board[1] == board[5] == board[15] == board[28] == board[32] != None or
-            board[3] == board[7] == board[20] == board[30] == board[34] != None or
+        [0, 3, 6, 18, 21],
+        [1, 4, 7, 19, 22],
+        [2, 5, 8, 20, 23],
+        [9, 12, 15, 27, 30],
+        [10, 13, 16, 28, 31],
+        [11, 14, 17, 29, 32],
 
-            board[4] == board[8] == board[27] == board[31] == board[35] != None or
+        [3, 6, 18, 21, 24],
+        [4, 7, 19, 22, 25],
+        [5, 8, 20, 23, 26],
+        [12, 15, 27, 30, 33],
+        [13, 16, 28, 31, 34],
+        [14, 17, 29, 32, 35],
 
-            board[11] == board[13] == board[15] == board[20] == board[22] != None or
-            board[10] == board[12] == board[8] == board[19] == board[21] != None or
-            board[14] == board[16] == board[27] == board[23] == board[25] != None or
+        [0, 4, 8, 27, 31],
+        [1, 5, 15, 28, 32],
+        [3, 7, 20, 30, 34],
 
-            board[13] == board[15] == board[20] == board[22] == board[24] != None):
-        board = init_board()
-        return True
+        [4, 8, 27, 31, 35],
+
+        [11, 13, 15, 20, 22],
+        [10, 12, 8, 19, 21],
+        [14, 16, 27, 23, 25],
+
+        [13, 15, 20, 22, 24]
+    ]
+    for combination in winning_combinations:
+        if all(board[i] == board[combination[0]] and board[i] is not None for i in combination):
+            data['wonComb'] = combination
+            return True
     return False
+
+
+
 
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: list[WebSocket] = []
+        self.active_connections = {}
 
-    async def connect(self, websocket: WebSocket):
-        if len(self.active_connections) >= 2:
+    async def connect(self, websocket: WebSocket, uuid: uuid.UUID):
+        if uuid not in self.active_connections:
+            self.active_connections[uuid] = GameRoom()
+        room = self.active_connections[uuid]
+        if len(room.connections) >= 2:
             await websocket.accept()
             await websocket.close(4000)
         else:
             await websocket.accept()
-            self.active_connections.append(websocket)
-            if (len(self.active_connections) == 1):
+            room.connections.append(websocket)
+            if (len(room.connections) == 1):
                 await websocket.send_json({
                     # Первый игрок присоеденился, задаем ему значение шариков "Black" и говорим чтобы он подождал второго игрока
                     'init': True,
@@ -177,42 +198,52 @@ class ConnectionManager:
                     'message': 'Ждите второго игрока'
                 })
             else:
-                await websocket.send_json({  # Второй игрок присоеденился, задаем ему значение шариков "Orange"
+                await room.connections[1].send_json({  # Второй игрок присоеденился, задаем ему значение шариков "Orange"
                     'init': True,
                     'player': 'Orange',
                     'message': ''
                 })
-                await self.active_connections[0].send_json({
+                await room.connections[0].send_json({
                     # Говорим первому игроку, что второй игрок присоеденился и говорим что сейчас его ход(первого игрока)
                     'init': True,
                     'player': 'Black',
                     'message': 'Ваш ход'
                 })
 
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
+    def disconnect(self, websocket: WebSocket, uuid: uuid.UUID):
+        room = self.active_connections.get(uuid)
+        if room:
+            room.connections.remove(websocket)
+            if not room.connections:
+                del self.active_connections[uuid]
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_text(message)
 
-    async def broadcast(self, data: str):
-        for connection in self.active_connections:
-            await connection.send_json(data)
+    async def broadcast(self, data: str, uuid: uuid.UUID):
+        print(data)
+        room = self.active_connections.get(uuid)
+        if uuid:
+
+            for connection in room.connections:
+                await connection.send_json(data)
 
 
 manager = ConnectionManager()
 
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
+@app.websocket("/ws/{uuid}")
+async def websocket_endpoint(websocket: WebSocket, uuid: uuid.UUID):
+    await manager.connect(websocket, uuid)
     try:
         while True:
             data = await websocket.receive_text()
             data = json.loads(data)
-            await update_board(manager, data)
+            print(data)
+            await update_board(manager, data, uuid)
     except WebSocketDisconnect:
-        manager.disconnect(websocket)
+        manager.disconnect(websocket, uuid)
+
     except:
         pass
 

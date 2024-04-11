@@ -2,6 +2,7 @@ import React, { Component, useContext, useState, createContext } from 'react'
 import MainPage from "./MainPage/MainPage.js";
 import Room from "./RoomPage/RoomPage.js";
 import Game from "./GamePage/GamePage.js";
+import Enter from "./EnterInGamePage/EnterInGamePage.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -13,7 +14,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/multipl" element={<Room />} />
-                <Route path="/game" element={<Game />} />
+                <Route path="/game/:gameId" element={<Game />} />
+                <Route path="/enter" element={<Enter />} />
             </Routes>
       </BrowserRouter>
     );

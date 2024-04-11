@@ -23,8 +23,8 @@ DIV.container0 {
     vertical-align: middle;
     position: absolute;
     background: #F5F5F5;
-    top: 35%;
-    left: 41%;
+    top: 38%;
+    left: 42%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
     border: 4px solid black
@@ -36,8 +36,8 @@ DIV.container1 {
     vertical-align: middle;
     position: absolute;
     background: #F5F5F5;
-    top: 35%;
-    left: 58%;
+    top: 38%;
+    left: 57%;
     margin-right: -50%;
     border: 4px solid black;
     transform: translate(-50%, -50%)
@@ -48,8 +48,8 @@ DIV.container2 {
     vertical-align: middle;
     position: absolute;
     background: #F5F5F5;
-    top: 76%;
-    left: 41%;
+    top: 69.5%;
+    left: 42%;
     margin-right: -50%;
     border: 4px solid black;
     transform: translate(-50%, -50%)
@@ -60,8 +60,8 @@ DIV.container3 {
     vertical-align: middle;
     position: absolute;
     background: #F5F5F5;
-    top: 76%;
-    left: 58%;
+    top: 69.5%;
+    left: 57%;
     margin-right: -50%;
     border: 4px solid black;
     transform: translate(-50%, -50%)
@@ -199,9 +199,168 @@ DIV.containerRoutateButton1Right {
     vertical-align: middle;
     position: absolute;
     background: #F5F5F5;
-    top: 46%;
+    top: 49%;
     left: 36%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
     
 }
+
+DIV.containerRoutateButton1Left {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 57%;
+    left: 32%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerRoutateButton2Right {
+    
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 57%;
+    left: 67%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+    
+}
+
+DIV.containerRoutateButton2Left {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 49%;
+    left: 63%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerRoutateButton3Right {
+    
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 122%;
+    left: 63%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+    
+}
+
+DIV.containerRoutateButton3Left {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 114%;
+    left: 67%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerRoutateButton4Right {
+    
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 114%;
+    left: 32%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+    
+}
+
+DIV.containerRoutateButton4Left {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 122%;
+    left: 36%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+
+
+DIV.containerExit {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 90%;
+    left: 11%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.mpButton5 {
+    background-color: #FF8C00;
+    font-family: 'Minecraft Ten', sans-serif;
+    font-weight: bolder;
+    border: none;
+    display: inline-block;
+    box-shadow: 0 5px 15px 0 rgb(0, 0, 0);
+    transition: 0.5s;
+    font-size: 30px
+}
+   
+.mpButton5:hover {
+    transform: translate(0,-3px);
+    box-shadow: 0 20px 20px 0 rgb(0, 0, 0);
+}
+
+DIV.containerNick {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 75%;
+    left: 11%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.game-nickName1 {
+    color: black;
+    font-size: 40px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+DIV.containerCopy {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 75%;
+    left: 15%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.game-nickName2 {
+    color: black;
+    font-size: 45px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+
+

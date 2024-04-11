@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Minecraft Ten';
+    src: url('./ttf/minecraft-ten-font-cyrillic.ttf') format('truetype'); /* Путь к вашему файлу шрифта */
+    font-weight: normal;
+    font-style: normal;
+}
+
+DIV.containerForm1 {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 65%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

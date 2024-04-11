@@ -8,20 +8,7 @@ import uuid from 'react-uuid';
 function MainPage() {
 
     const [username, setUsername] = useState('');
-    const [userId, setUserId] = useState('');
 
-
-    const generateUserId = () => {
-        if (!userId) { // Проверяем, был ли userId уже сгенерирован
-            const generatedUserId = uuid();
-            console.log(generatedUserId);
-            setUserId(generatedUserId); // Устанавливаем сгенерированный userId в состояние
-            return generatedUserId;
-        }
-        return userId; // Если userId уже сгенерирован, возвращаем его из состояния
-    };
-
-  
     const handleSubmit = async (event) => { 
         event.preventDefault();//чтобы не обновлялось
         
@@ -34,13 +21,13 @@ function MainPage() {
 
 
 
-        const generatedUserId = generateUserId();   // Генерация UUID для пользователя
-        console.log(userId);
+        // const generatedUserId = generateUserId();   // Генерация UUID для пользователя
+        // console.log(userId);
         
         
         
         alert("Вы успешно задали свой ник!!!")
-        setUserId(generatedUserId);
+        //setUserId(generatedUserId);
 
        
         
@@ -56,7 +43,7 @@ function MainPage() {
             alert("Нельзя играть без ника")
         }else {
             localStorage.setItem('username', username);
-            localStorage.setItem('userId', userId);
+            //localStorage.setItem('userId', userId);
             window.location.assign('multipl')
         }
     };

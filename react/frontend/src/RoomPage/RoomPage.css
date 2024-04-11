@@ -5,6 +5,45 @@
     font-style: normal;
 }
 
+.game-title1 {
+    color: black;
+    font-size: 25px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+.game-rule {
+    color: black;
+    font-size: 15px;
+    font-family: 'Minecraft Ten', sans-serif; 
+    font-weight: bolder;
+}
+
+DIV.containerRule {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 77%;
+    left: 80%;
+    margin-right: -50%;
+    text-align: center;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerTitle1 {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 65%;
+    left: 80%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
 DIV.containerFor1PButton {
     min-height: 30em;
     display: table-cell;
@@ -24,6 +63,18 @@ DIV.containerFor2PButton {
     position: absolute;
     background: #F5F5F5;
     top: 68%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+DIV.containerFor3PButton {
+    min-height: 30em;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    background: #F5F5F5;
+    top: 92%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
@@ -62,7 +113,7 @@ DIV.container {
 
 .game-nickName {
     color: black;
-    font-size: 40px;
+    font-size: 60px;
     font-family: 'Minecraft Ten', sans-serif; 
     font-weight: bolder;
 }
